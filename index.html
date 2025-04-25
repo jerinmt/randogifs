@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RandoGifs</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="frame">
+        <div>
+            <button type="button">Another one</button>
+            <input type="search" name="searchBar">    
+        </div>
+        <img src="#" width="500px">
+    </div>
+    
+    <script>
+        const img = document.querySelector('img');
+        let searchItem = 'dogs';
+        function searchAGif(item) {
+            fetch(`https://api.giphy.com/v1/gifs/translate?api_key=zzlLdp3aWJNzxUmUwSxIE3K6Pn2FeMTT&s=${item}`, {mode: 'cors'})
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(response) {
+                if(response){
+                    img.src = response.data.images.original.url;    
+                } else {
+                    img.src = './assets/noresult.webp';
+                }
+                
+            });    
+        }
+        searchAGif(searchItem);
+        const randomButton = document.querySelector('button');
+        randomButton.addEventListener('click', ()=>{
+            searchAGif(searchItem);
+        });
+        const searchBar = document.querySelector('input');
+        searchBar.addEventListener('input', ()=>{
+            searchItem = searchBar.value;
+            searchAGif(searchItem);
+        });
+    </script>
+</body>
+</html>
